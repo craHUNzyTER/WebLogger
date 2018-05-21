@@ -3,7 +3,7 @@ const maxLogsCount = 20;
 var isSubscribed = false;
 
 var subscribeButton = document.getElementById("subscribeButton");
-var logButton = document.getElementById("startLogButton");
+var startLogButton = document.getElementById("startLogButton");
 var logTable = document.getElementById("logTable");
 
 const connection = new signalR.HubConnectionBuilder()
@@ -36,14 +36,14 @@ subscribeButton.addEventListener("click",
         event.preventDefault();
     });
 
-logButton.addEventListener("click",
+startLogButton.addEventListener("click",
     event => {
         var xhr = new XMLHttpRequest();
-
         xhr.open("POST", '/api/v1/start-log', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
         xhr.send();
+
+        startLogButton.style.visibility = "hidden";
 
         event.preventDefault();
     });
