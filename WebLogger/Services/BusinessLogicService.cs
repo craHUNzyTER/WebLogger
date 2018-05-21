@@ -17,9 +17,28 @@ namespace WebLogger.Services
 
         public void DoSomeLogic()
         {
+            var isError = true;
             while (true)
             {
-                _logger.Write("Error", "Some important error.");
+                string type;
+                string details;
+
+                if (isError)
+                {
+                    type = "Error";
+                    details = "Some important error.";
+
+                    isError = false;
+                }
+                else
+                {
+                    type = "Warning";
+                    details = "Some information.";
+
+                    isError = true;
+                }
+
+                _logger.Write(type, details);
                 Thread.Sleep(1000);
             }
         }
