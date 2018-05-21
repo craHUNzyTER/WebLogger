@@ -1,4 +1,5 @@
 ﻿const logGroupName = "weblog";
+const maxLogsCount = 20;
 var isSubscribed = false;
 
 var subscribeButton = document.getElementById("subscribeButton");
@@ -11,7 +12,13 @@ const connection = new signalR.HubConnectionBuilder()
 
 connection.on("Consume",
     (type, details) => {
-        createLogRow(1, type, details);
+        var index = logTable.rows.length;
+
+        createLogRow(index, type, details);
+
+        if (index > maxLogsCount) {
+            deleteLogRow(1);
+        }
     });
 
 subscribeButton.addEventListener("click",
@@ -49,4 +56,8 @@ function createLogRow(index, type, details) {
     var cell2 = row.insertCell(1);
     cell1.innerHTML = type;
     cell2.innerHTML = details;
+}
+
+function deleteLogRow(index) {
+    logTable.deleteRow(index);
 }
