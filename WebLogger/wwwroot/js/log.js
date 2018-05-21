@@ -1,12 +1,18 @@
-﻿const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/signalr")
-    .build();
-
-const logGroupName = "weblog";
+﻿const logGroupName = "weblog";
 var isSubscribed = false;
 
 var subscribeButton = document.getElementById("subscribeButton");
 var logButton = document.getElementById("startLogButton");
+var logTable = document.getElementById("logTable");
+
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/signalr")
+    .build();
+
+connection.on("Consume",
+    (type, details) => {
+        createLogRow(1, type, details);
+    });
 
 subscribeButton.addEventListener("click",
     event => {
@@ -36,3 +42,11 @@ logButton.addEventListener("click",
     });
 
 connection.start().catch(err => console.error(err.toString()));
+
+function createLogRow(index, type, details) {
+    var row = logTable.insertRow(index);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.innerHTML = type;
+    cell2.innerHTML = details;
+}
