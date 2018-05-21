@@ -21,6 +21,7 @@ namespace WebLogger
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ILogger, SignalrLogger>();
+            services.AddSingleton<IBusinessLogicService, BusinessLogicService>();
 
             services.AddSignalR();
             services.AddMvc();
