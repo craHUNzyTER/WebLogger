@@ -6,6 +6,7 @@ const logGroupName = "weblog";
 var isSubscribed = false;
 
 var subscribeButton = document.getElementById("subscribeButton");
+var logButton = document.getElementById("startLogButton");
 
 subscribeButton.addEventListener("click",
     event => {
@@ -18,6 +19,18 @@ subscribeButton.addEventListener("click",
             isSubscribed = !isSubscribed;
             subscribeButton.value = "Unsubscribe";
         }
+
+        event.preventDefault();
+    });
+
+logButton.addEventListener("click",
+    event => {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", '/api/v1/start-log', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.send();
 
         event.preventDefault();
     });
